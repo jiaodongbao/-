@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="db.properties"/>
+
+    <!--
+
+        设置与数据库交互的环境
+        例如可以在此处配置二级缓存，配置查询延迟加载策略等等...
+            配置的目的是为了更加有效的查询表中的记录
+
+        在实际项目开发中，settings的设置基本没用
+        因为settings对于查询的优化，得到的效果不明显
+
+        对于海量级别的数据，使用settings配置优化，起不到任何的效果
+        对于数据量较少的项目，对于查询的效率要求的比较低，也没有必要使用settings配置
+
+        如果遇到了海量级别的数据，我们如何去提高查询的效率呢？
+
+        基础操作
+            对于常用的查询条件的字段，设置索引
+
+        高级操作
+            使用nosql数据库，redis
+
+        专业操作
+            Elasticsearch与Solr
+            针对于电商行业
+            select * from tbl_product where name like '%手机%'
+
+
+    -->
+    <!--<settings>
+        <setting name="" value=""/>
+    </settings>-->
+
+    <!--
+
+        为mapper映射文件中的domain起别名
+
+    -->
+    <typeAliases>
+
+        <!--
+
+            方式1：
+                为指定的类分别起别名，别名的命名由我们自己来决定
+
+                type：要为哪个domian起别名  填写包.类名称
+                alias：别名的名字
+
+        -->
+        <!--<typeAlias type="com.bjpowernode.domain.Student" alias="stu"/>-->
+
+        <!--
+
+            方式2：
+                使用package标签批量起别名
+                别名是MyBatis默认为我们取好的，命名不是由我们自己决定，别名为类名（类名的字母不区分大小写）
+                                                                    虽然字母不区分大小写，但是我们还是要按照预定俗成的规则填写
+                                                                    类名，类名首字母可以小写
+
+                name：指定一个包结构，表示在该包下，所有的domain自动起好了别名
+
+        -->
+
+        <!--
+
+            总结：
+                （1）未来实际项目开发中，如果公司需要使用起别名的机制，我们要使用批量起别名的方式
+                （2）在市场上也有很多企业摒弃使用MyBaits起别名的机制
+                       公司会认为将domian写成全路径，可以有效的提供代码的可读性
+
+        -->
+
+        <package name="com.bjpowernode.domain"/>
+
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:ORCL"/>
+                <property name="username" value="scott"/>
+                <property name="password" value="tiger"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--<mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
+        <!--
+
+            方式1：
+                使用resource属性，指定mapper映射文件
+
+        -->
+        <!--<mapper resource="com/bjpowernode/dao/StudentDao.xml"/>-->
+
+        <!--
+
+            方式2：
+                使用class属性，找到dao层接口的全路径
+
+        -->
+        <!--<mapper class="com.bjpowernode.dao.StudentDao"/>-->
+
+        <!--
+
+            方式3：
+                批量注册
+                name属性：指向dao层的包，表示在该dao包下，所有的mapper映射文件自动注册
+
+        -->
+
+        <!--
+
+            总结：
+                未来实际项目开发中，我们一定是批量注册mapper映射文件
+
+        -->
+
+        <package name="com.bjpowernode.dao"/>
+
+    </mappers>
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
